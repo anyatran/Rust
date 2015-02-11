@@ -1,10 +1,10 @@
-use std::io;
+use std::old_io;
 use std::os;
 
 fn main() {
     let filename = &os::args()[1];
     let path = Path::new(filename);
-    let mut file_final = io::BufferedReader::new(io::File::open(&path));
+    let mut file_final = old_io::BufferedReader::new(old_io::File::open(&path));
     let buf: String  = file_final.read_to_string().unwrap();
     let buf_string: &str = buf.as_slice();
     let lines: usize = count_lines(buf_string);
@@ -35,12 +35,12 @@ pub fn count_bytes(content: &str) -> usize {
 #[cfg(test)]
 
 mod wc_test {   
-use std::io;
+use std::old_io;
 use super::*;
     #[test]
     fn test_wc_1() {
         let p = Path::new("test1.txt");
-        let mut f_1 = io::BufferedReader::new(io::File::open(&p));
+        let mut f_1 = old_io::BufferedReader::new(old_io::File::open(&p));
         let buf_1: String = f_1.read_to_string().unwrap();
         let buf_str_1: &str = buf_1.as_slice();
         assert_eq!(count_lines(buf_str_1), 5);
@@ -51,7 +51,7 @@ use super::*;
     #[test]
     fn test_wc_2() {
         let p2 = Path::new("test2.txt");
-        let mut f_2 = io::BufferedReader::new(io::File::open(&p2));
+        let mut f_2 = old_io::BufferedReader::new(old_io::File::open(&p2));
         let buf_2: String = f_2.read_to_string().unwrap();
         let buf_str_2: &str = buf_2.as_slice();
         assert_eq!(count_lines(buf_str_2), 1);

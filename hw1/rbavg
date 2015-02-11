@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+end_marker = '999'
+measurements = []
+num_measured = 0
+ARGF.each_line do |line|
+  stripped = line.strip
+  break if end_marker == stripped
+  next unless line =~ /^\d*\.?\d*$/
+  measurement = line.to_f
+  next if measurement < 0
+  measurements.push measurement
+  num_measured += 1
+end
+
+# If we received no valid measurements, just output 0 for everything
+if num_measured == 0
+  3.times { puts 0 }
+  exit
+end
+
+average = measurements.reduce(:+) / num_measured
+
+def num_within_range nums, least, greatest
+  nums.select do |num|
+    least <= num && num <= greatest
+  end.count
+end
+
+puts average
+puts num_within_range measurements, average, (average + 5.0)
+puts num_within_range measurements, (average - 5.0), average
